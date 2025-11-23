@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Stock Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Stock Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="suppliers.html">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="companies.html">Companies</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="stockDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            Stock
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="stock-in.html">Stock In</a></li>
+                            <li><a class="dropdown-item" href="stock-out.html">Stock Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron bg-light p-5 rounded">
+                    <h1 class="display-4">Welcome to Stock Management System</h1>
+                    <p class="lead">Manage your inventory, suppliers, and stock movements efficiently.</p>
+                    <hr class="my-4">
+
+                    <!-- Stats Row -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Products</h5>
+                                    <p class="card-text display-6" id="totalProducts">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-success">
+                                <div class="card-body">
+                                    <h5 class="card-title">Stock Value</h5>
+                                    <p class="card-text display-6" id="totalStockValue">0 RWF</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-warning">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Revenue</h5>
+                                    <p class="card-text display-6" id="totalRevenue">0 RWF</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-info">
+                                <div class="card-body">
+                                    <h5 class="card-title">Suppliers</h5>
+                                    <p class="card-text display-6" id="totalSuppliers">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Products</h5>
+                                    <p class="card-text">Manage inventory items</p>
+                                    <a href="products.html" class="btn btn-primary btn-sm">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Stock In</h5>
+                                    <p class="card-text">Record incoming stock</p>
+                                    <a href="stock-in.html" class="btn btn-success btn-sm">Add Stock</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Stock Out</h5>
+                                    <p class="card-text">Record outgoing stock</p>
+                                    <a href="stock-out.html" class="btn btn-warning btn-sm">Sell Stock</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cashiers</h5>
+                                    <p class="card-text">Manage cashier accounts</p>
+                                    <a href="register.html" class="btn btn-secondary btn-sm">Add Cashier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        checkAuth();
+
+        async function loadStats() {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(`${CONFIG.API_BASE_URL}/reports/dashboard`, {
+                    headers: { 'x-auth-token': token }
+                });
+
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        alert('Session expired. Please login again.');
+                        logout();
+                        return;
+                    }
+                    throw new Error(`Server Error: ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                document.getElementById('totalProducts').textContent = data.totalProducts;
+                document.getElementById('totalStockValue').textContent = data.totalStockValue.toFixed(2) + ' RWF';
+                document.getElementById('totalRevenue').textContent = data.totalRevenue.toFixed(2) + ' RWF';
+                document.getElementById('totalSuppliers').textContent = data.totalSuppliers;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('totalProducts').textContent = '-';
+                document.getElementById('totalStockValue').textContent = '-';
+                document.getElementById('totalRevenue').textContent = '-';
+                document.getElementById('totalSuppliers').textContent = '-';
+            }
+        }
+
+        loadStats();
+    </script>
+</body>
+
+</html>

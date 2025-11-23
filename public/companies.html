@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies - Stock Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Stock Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="suppliers.html">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="companies.html">Companies</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="stockDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            Stock
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="stock-in.html">Stock In</a></li>
+                            <li><a class="dropdown-item" href="stock-out.html">Stock Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Company Management</h2>
+
+        <div class="card mb-4">
+            <div class="card-header">Add New Company</div>
+            <div class="card-body">
+                <form id="companyForm">
+                    <input type="hidden" id="companyId">
+                    <div class="mb-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telephone</label>
+                        <input type="text" class="form-control" id="telephone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Company</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()" style="display:none;"
+                        id="cancelBtn">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Companies List</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Telephone</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companiesTableBody">
+                        <!-- Companies will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/companies.js"></script>
+    <script>
+        checkAuth();
+        loadCompanies();
+    </script>
+</body>
+
+</html>

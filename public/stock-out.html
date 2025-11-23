@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Out - Stock Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Stock Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="suppliers.html">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="companies.html">Companies</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="stockDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            Stock
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="stock-in.html">Stock In</a></li>
+                            <li><a class="dropdown-item active" href="stock-out.html">Stock Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Record Stock Out (Cart)</h2>
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card mb-4">
+                    <div class="card-header">New Sale</div>
+                    <div class="card-body">
+                        <form id="stockOutForm">
+                            <div class="mb-3">
+                                <label class="form-label">Customer Name</label>
+                                <input type="text" class="form-control" id="customerName" required>
+                            </div>
+                            <hr>
+                            <h5>Add Item</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Product</label>
+                                    <select class="form-control" id="productSelect">
+                                        <option value="">Select Product</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" min="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Unit Price (Cost)</label>
+                                    <input type="number" class="form-control" id="unitPrice" readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Selling Price</label>
+                                    <input type="number" class="form-control" id="sellingPrice" step="0.01">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addToCart()">Add to Cart</button>
+                        </form>
+
+                        <hr class="mt-4">
+                        <h5>Cart</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartTableBody"></tbody>
+                        </table>
+                        <div class="text-end mt-3">
+                            <h4>Total: <span id="cartTotal">0.00</span> RWF</h4>
+                            <button class="btn btn-primary btn-lg" onclick="checkout()">Checkout & Print
+                                Invoice</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Recent Entries</span>
+                            <div class="d-flex gap-2">
+                                <input type="date" id="startDate" class="form-control form-control-sm"
+                                    style="width: 130px;">
+                                <input type="date" id="endDate" class="form-control form-control-sm"
+                                    style="width: 130px;">
+                                <button class="btn btn-sm btn-secondary" onclick="loadRecentStockOut()">Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentStockOutTable">
+                                <!-- Recent entries will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/stock-out.js"></script>
+    <script>
+        checkAuth();
+        loadDropdowns();
+        loadRecentStockOut();
+    </script>
+</body>
+
+</html>
