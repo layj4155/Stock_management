@@ -30,15 +30,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="companies.html">Companies</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="stockDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            Stock
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="stock-in.html">Stock In</a></li>
-                            <li><a class="dropdown-item" href="stock-out.html">Stock Out</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock-out.html">Stock Out</a>
                     </li>
                 </ul>
                 <button class="btn btn-outline-light" onclick="logout()">Logout</button>
@@ -54,27 +47,27 @@
             <div class="card-body">
                 <form id="productForm">
                     <input type="hidden" id="productId">
-                    <div class="mb-3">
-                        <label class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="name" required>
-                    </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" value="0" required>
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" required>
                         </div>
                         <div class="col-md-6 mb-3">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label">Unit Price</label>
                             <input type="number" class="form-control" id="unitPrice" step="0.01" required>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Mfg Date</label>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Manufacturing Date</label>
                             <input type="date" class="form-control" id="mfgDate">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Exp Date</label>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Expiry Date</label>
                             <input type="date" class="form-control" id="expDate">
                         </div>
                     </div>
