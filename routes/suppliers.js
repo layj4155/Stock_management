@@ -107,7 +107,7 @@ router.delete('/:id', auth, async (req, res) => {
 
         if (!supplier) return res.status(404).json({ msg: 'Supplier not found' });
 
-        await Supplier.findByIdAndRemove(req.params.id);
+        await Supplier.findByIdAndDelete(req.params.id);
 
         res.json({ msg: 'Supplier removed' });
     } catch (err) {
